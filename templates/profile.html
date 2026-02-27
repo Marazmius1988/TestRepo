@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - Мой Flask Сайт</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('index') }}">Главная</a>
+            <a href="{{ url_for('about') }}">О нас</a>
+            <a href="{{ url_for('profile') }}">Профиль</a>
+            <a href="{{ url_for('logout') }}">Выход</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Личный кабинет</h1>
+        
+        <div class="profile-card">
+            <div class="profile-header">
+                <span class="profile-avatar">{{ user.username[0].upper() }}</span>
+                <h2>{{ user.username }}</h2>
+            </div>
+            
+            <div class="profile-info">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Дата регистрации:</strong> {{ user.created_at.strftime('%d.%m.%Y в %H:%M') }}</p>
+                <p><strong>Статус:</strong> 
+                    <span class="badge {{ 'active' if user.is_active else 'inactive' }}">
+                        {{ 'Активен' if user.is_active else 'Неактивен' }}
+                    </span>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Мой Flask Сайт</p>
+    </footer>
+</body>
+</html>

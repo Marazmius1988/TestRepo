@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Мой Flask Сайт</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('index') }}">Главная</a>
+            <a href="{{ url_for('about') }}">О нас</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Вход</h1>
+
+        <!-- Ошибки формы (для отладки) -->
+        {% if form.errors %}
+        <div class="flash error">
+            <strong>Ошибки в форме:</strong>
+            <ul>
+            {% for field, errors in form.errors.items() %}
+                {% for error in errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form method="POST" class="auth-form">
+            {{ form.csrf_token }}
+            
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(size=64, type='email', placeholder='example@mail.com') }}
+                {% for error in form.email.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(size=32) }}
+                {% for error in form.password.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group checkbox">
+                {{ form.remember_me() }}
+                {{ form.remember_me.label }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.submit() }}
+            </div>
+        </form>
+        
+        <p class="auth-link">
+            Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a>
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Мой Flask Сайт</p>
+    </footer>
+</body>
+</html>
